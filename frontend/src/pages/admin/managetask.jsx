@@ -1,9 +1,9 @@
 import React from 'react'
 
-const managetask = () => {
+const Managetask = () => {
   return (
-    <div>manage task</div>
+    <div>Manage task</div>
   )
 }
 
-export default managetask
+export default Managetask

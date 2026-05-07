@@ -1,9 +1,9 @@
 import React from 'react'
 
-const createtask = () => {
+const Createtask = () => {
   return (
-    <div>create task </div>
+    <div>Create task </div>
   )
 }
 
-export default createtask
+export default Createtask
