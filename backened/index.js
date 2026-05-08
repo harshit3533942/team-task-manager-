@@ -1,7 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+
 dotenv.config();
+mongoose.connect(process.env.Mongo_URL).then(()=>{
+    console.log("connected to database");
+})
+.catch((err)=>{
+    console.log("error connecting to database",err);
+});
 
 const app = express();
 //middleware to handle cors
