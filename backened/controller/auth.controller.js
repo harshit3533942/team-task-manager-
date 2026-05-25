@@ -58,8 +58,20 @@ export const signin = async (req, res,next) => {
   const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
 
   const { password: pass,...rest } =validUser._doc
-  res.status(200).cookie("acess_token", token, {httponly:true}).json(rest); 
+  res.status(200).cookie("access_token", token, {httpOnly:true}).json(rest); 
 }catch(error){
   next(error)
 }
 };
+export const userProfile = async (req, res,next) => {
+  try {
+    const user = await User.findById(req.user.id)
+    if (!user) {
+      return next(errorHandler(404, "User not found"));
+    }
+    const { password, ...rest } = user._doc;
+    res.status(200).json(rest);
+  } catch (error) {
+    next(error)
+  }
+}
