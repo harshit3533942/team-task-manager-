@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import authRoute from "./routes/auth.route.js";
 import userRoute from "./routes/user.route.js";
+import taskRoute from "./routes/task.route.js";
 dotenv.config();
 mongoose.connect(process.env.Mongo_URL).then(()=>{
     console.log("connected to database");
@@ -31,6 +32,7 @@ app.listen(3000,()=>{
 
 app.use("/api/auth",authRoute);
 app.use("/api/users",userRoute);
+app.use("/api/tasks",taskRoute);
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
