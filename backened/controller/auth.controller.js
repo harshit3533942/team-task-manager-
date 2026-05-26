@@ -55,12 +55,16 @@ export const signin = async (req, res,next) => {
   if (!validpassword) {
     return next(errorHandler(400, "wrong credentials"));
   }
-  const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+  const token = jwt.sign(
+  { id: validUser._id, role: validUser.role },
+  process.env.JWT_SECRET
+);
+console.log("Generated JWT:", token);
 
   const { password: pass,...rest } =validUser._doc
   res.status(200).cookie("access_token", token, {httpOnly:true}).json(rest); 
 }catch(error){
-  next(error)
+  next(error);
 }
 };
 export const userProfile = async (req, res,next) => {
@@ -84,7 +88,7 @@ export const updateUserProfile = async (req, res,next) => {
     user.username = req.body.username || user.username;
     user.email = req.body.email || user.email;
     if (req.body.password) {
-      user.password = bcrypt.hash(req.body.password, 10);
+      user.password =await bcrypt.hash(req.body.password, 10);
     }
     const updatedUser = await user.save();
     const { password, ...rest } = user._doc;

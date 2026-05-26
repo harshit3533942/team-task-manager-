@@ -3,7 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
-import authRoute from "./routes/auth.route.js"
+import authRoute from "./routes/auth.route.js";
+import userRoute from "./routes/user.route.js";
 dotenv.config();
 mongoose.connect(process.env.Mongo_URL).then(()=>{
     console.log("connected to database");
@@ -28,7 +29,9 @@ app.listen(3000,()=>{
     console.log("server is running on port 3000");
 })
 
-app.use("/api/auth",authRoute)
+app.use("/api/auth",authRoute);
+app.use("/api/users",userRoute);
+
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
     const message = err.message || "Internal Server Error";
